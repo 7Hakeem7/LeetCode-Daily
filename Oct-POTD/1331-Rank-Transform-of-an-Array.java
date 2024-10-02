@@ -1,26 +1,26 @@
 class Solution {
     public int[] arrayRankTransform(int[] arr) {
-        if (arr.length == 0) {
-            return new int[0];
-        }
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        if (arr.length == 0) return new int[0]; // Edge case: empty array
+        
+        int[] sortedArr = arr.clone(); // Clone the original array
+        Arrays.sort(sortedArr); // Sort the array
+        
+        // Map to store the rank of each unique element
         Map<Integer, Integer> rankMap = new HashMap<>();
-
-        for (int num : arr) {
-            pq.offer(num);
-        }
-
         int rank = 1;
-        while (!pq.isEmpty()) {
-            int current = pq.poll();
-            if (!rankMap.containsKey(current)) {
-                rankMap.put(current, rank++);
+        
+        // Assign ranks to the unique elements
+        for (int num : sortedArr) {
+            if (!rankMap.containsKey(num)) {
+                rankMap.put(num, rank++);
             }
         }
-        int[] result = new int[arr.length];
+        
+        // Replace the elements in the original array with their ranks
         for (int i = 0; i < arr.length; i++) {
-            result[i] = rankMap.get(arr[i]);
+            arr[i] = rankMap.get(arr[i]);
         }
-        return result;
+        
+        return arr;
     }
 }
