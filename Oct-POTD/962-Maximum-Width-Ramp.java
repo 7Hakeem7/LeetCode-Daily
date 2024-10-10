@@ -1,27 +1,24 @@
-import java.util.*;
-
 class Solution {
     public int maxWidthRamp(int[] nums) {
-        int n = nums.length;
-        List<Integer> indices = new ArrayList<>();
         
-        // Collect all indices
-        for (int i = 0; i < n; i++) {
-            indices.add(i);
+        int[] maxOnRight = new int[nums.length];
+        maxOnRight[nums.length - 1] = nums[nums.length - 1];
+
+        for(int i = nums.length - 2; i >= 0; i--) {
+            maxOnRight[i] = Math.max(maxOnRight[i+1], nums[i]) ;;
         }
-        
-        // Sort the indices based on the values at nums[i]
-        Collections.sort(indices, (a, b) -> Integer.compare(nums[a], nums[b]));
-        
-        int minIndex = Integer.MAX_VALUE;
         int maxRamp = 0;
-        
-        // Traverse the sorted indices and calculate the ramp width
-        for (int index : indices) {
-            maxRamp = Math.max(maxRamp, index - minIndex);
-            minIndex = Math.min(minIndex, index);
+        int left = 0, right = 0;
+        while(right < nums.length) {
+
+            while ( left <= right && nums[left] > maxOnRight[right]) {
+                left++;
+            }
+
+            maxRamp = Math.max(maxRamp, right - left );
+            right++;
+
         }
-        
-        return maxRamp;
+        return maxRamp;        
     }
 }
