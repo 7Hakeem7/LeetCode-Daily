@@ -3,27 +3,27 @@ import java.util.Set;
 
 class Solution {
     public int maxUniqueSplit(String s) {
-        Set<String> uniqueSubstrings = new HashSet<>();
-        return backtrack(s, 0, uniqueSubstrings);
+        HashSet<String> set = new HashSet<>();
+        return findMaxUnique(s, 0, set);
     }
 
-    private int backtrack(String s, int start, Set<String> uniqueSubstrings) {
+    // Recursive function to find the maximum unique substrings
+    private int findMaxUnique(String s, int start, HashSet<String> set) {
         if (start == s.length()) {
-            return uniqueSubstrings.size();
+            return 0;  // Base case: if we have gone through the whole string
         }
 
         int maxCount = 0;
 
+        // Iterate through all possible substrings starting from 'start'
         for (int end = start + 1; end <= s.length(); end++) {
             String substring = s.substring(start, end);
-
-            // Only proceed if the substring is unique
-            if (!uniqueSubstrings.contains(substring)) {
-                uniqueSubstrings.add(substring);
-                // Recur to get the count from the next position
-                maxCount = Math.max(maxCount, backtrack(s, end, uniqueSubstrings));
-                // Backtrack to explore other possibilities
-                uniqueSubstrings.remove(substring);
+            // If substring is not in set, add it and continue recursively
+            if (!set.contains(substring)) {
+                set.add(substring);
+                int count = 1 + findMaxUnique(s, end, set);  // Recur with the next start position
+                maxCount = Math.max(maxCount, count);  // Track the maximum number of unique substrings
+                set.remove(substring);  // Backtrack and remove the substring
             }
         }
 
