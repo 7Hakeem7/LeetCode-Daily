@@ -23,34 +23,48 @@
 
 //}
 class Solution {
-    
-    private int maxMoves = 0;
-    
-    private int[][] dirs = {{-1,1}, {0,1}, {1,1}};
-    
+    private int row;
+    private int col;
+    private int[][] cache;
+    private int[][] directions = {{-1,1},{0,1},{1,1}};
+    private int[][] grid;
     public int maxMoves(int[][] grid) {
-        
-        boolean[][] vis = new boolean[grid.length][grid[0].length];
-        for(int i=0;i<grid.length;i++){
-            dfs(i, 0, grid, 0, vis);
-        }
-        
-        return maxMoves;
-    }
-    
-    void dfs(int row, int col , int[][] grid, int moves, boolean[][] vis){
-        maxMoves = Math.max(moves, maxMoves);
-        vis[row][col] = true;
-        
-        for(int[] dir : dirs){
-            int nRow = row + dir[0];
-            int nCol = col + dir[1];
+        // DFS + memo
+        row = grid.length;
+        col = grid[0].length;
+        this.grid = grid;
+        cache = new int[row][col];
+        int res = 0;
+        for(int r = 0;r<row;r++)
+        {
             
-            if(nRow == -1 || nRow == grid.length || nCol == grid[nRow].length || grid[nRow][nCol] <= grid[row][col] || vis[nRow][nCol]){
-                continue;
+            res = Math.max(res,dfs(r,0));
+            
+        }
+        return res;
+    }
+
+    private int dfs(int r, int c)
+    {
+        if(!inRange(r,c)) return 0;
+        if(cache[r][c] > 0) return cache[r][c];
+        int currRes = 0;
+        for(int[] direction:directions)
+        {
+            int nextR = r+direction[0];
+            int nextC = c+direction[1];
+            if(inRange(nextR, nextC) && grid[nextR][nextC] > grid[r][c])
+            {
+                currRes = Math.max(currRes, 1+dfs(nextR, nextC));
             }
-            
-            dfs(nRow, nCol, grid, moves+1, vis);
         }
+        cache[r][c] = currRes;
+        return currRes;
     }
+
+    private boolean inRange(int r, int c)
+    {
+        return r>=0 && r < row && c>=0 && c < col;
+    }
+
 }
