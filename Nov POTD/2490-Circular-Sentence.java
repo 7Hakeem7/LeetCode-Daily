@@ -16,11 +16,12 @@ class Solution {
             }
         }
         
-        if(cond1 == true && cond2 == true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        // if(cond1 == true && cond2 == true){
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        return cond1 && cond2;
     }
 }
