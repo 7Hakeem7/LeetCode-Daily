@@ -1,10 +1,15 @@
 class Solution {
     public int[] vowelStrings(String[] words, int[][] queries) {
+        // Define vowels for quick lookup
+        boolean[] isVowel = new boolean[26];
+        isVowel['a' - 'a'] = true;
+        isVowel['e' - 'a'] = true;
+        isVowel['i' - 'a'] = true;
+        isVowel['o' - 'a'] = true;
+        isVowel['u' - 'a'] = true;
+
         int n = words.length;
         int[] prefixVowelCount = new int[n + 1];
-
-        // Define vowels
-        String vowels = "aeiou";
 
         // Pre-traversal: Check if a string starts and ends with a vowel
         for (int i = 0; i < n; i++) {
@@ -12,8 +17,8 @@ class Solution {
             char first = word.charAt(0);
             char last = word.charAt(word.length() - 1);
 
-            // If it starts and ends with a vowel, increment the count
-            prefixVowelCount[i + 1] = prefixVowelCount[i] + (vowels.indexOf(first) != -1 && vowels.indexOf(last) != -1 ? 1 : 0);
+            // Increment the count if both first and last characters are vowels
+            prefixVowelCount[i + 1] = prefixVowelCount[i] + (isVowel[first - 'a'] && isVowel[last - 'a'] ? 1 : 0);
         }
 
         // Prepare the result array
