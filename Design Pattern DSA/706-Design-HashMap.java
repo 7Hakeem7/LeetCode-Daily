@@ -2,21 +2,21 @@ class MyHashMap {
     int[] arrMap;
     public MyHashMap() {
         arrMap = new int[1000001];
-        for(int i = 0; i < arrMap.length; i++){
-            arrMap[i] = -1;
-        }
+        // for(int i = 0; i < arrMap.length; i++){
+        //     arrMap[i] = -1;
+        // }
     }
     
     public void put(int key, int value) {
-        arrMap[key] = value;
+        arrMap[key] = value+1;
     }
     
     public int get(int key) {
-        return arrMap[key];
+        return arrMap[key]-1;
     }
     
     public void remove(int key) {
-        arrMap[key] = -1;
+        arrMap[key] = 0;
     }
 }
 
