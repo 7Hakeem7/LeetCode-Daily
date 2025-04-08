@@ -1,10 +1,20 @@
 class Solution {
     public int minimumOperations(int[] nums) {
-        int[] freq = new int[101];
-    Arrays.fill(freq, 0);
-    for(int i = nums.length-1; i >= 0; --i){
-        if(++freq[nums[i]] > 1) return (int)Math.ceil((double)(i + 1)/3);
-    }
-    return 0;
+        int count = 0;
+        int i=0;
+        while(i < nums.length){
+            HashSet<Integer> set = new HashSet<>();
+            for(int j=i;j<nums.length;j++){
+                int num = nums[j];
+                if(set.contains(num)){
+                    count++;
+                    
+                    break;
+                }
+                set.add(num);
+            }
+            i += 3;
+        }
+        return count;
     }
 }
