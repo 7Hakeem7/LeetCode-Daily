@@ -1,5 +1,6 @@
 class Solution {
     public int[] sortArray(int[] nums) {
+        //BUBBLE SORT
         //int [] sortedArr = new int[nums.length];
         //[7 ,4 ,1 ,5 ,3]
         
