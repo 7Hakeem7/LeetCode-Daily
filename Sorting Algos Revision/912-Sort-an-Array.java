@@ -3,17 +3,13 @@ class Solution {
         //int [] sortedArr = new int[nums.length];
         //[7 ,4 ,1 ,5 ,3]
         
-        for(int i = 0; i < nums.length - 1; i++){
-            int mini = Integer.MAX_VALUE;
-            int minInd = i;
-            for(int j = i; j < nums.length; j++){
-                if(nums[j] < mini){
-                    mini = nums[j];
-                    minInd = j;
+        for(int i = nums.length - 1; i >= 0; i--){
+            for(int j = 0; j <= i - 1; j++){
+                if(nums[j] > nums[j + 1]){
+                    int temp = nums[j];
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = temp;
                 }
-            }
-            if(minInd != -1){
-            swap(minInd , i, nums);
             }
         }
         return nums;
