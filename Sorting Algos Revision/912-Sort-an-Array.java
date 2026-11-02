@@ -1,23 +1,53 @@
 class Solution {
     public int[] sortArray(int[] nums) {
-        //BUBBLE SORT
-        //int [] sortedArr = new int[nums.length];
-        //[7 ,4 ,1 ,5 ,3]
-        
-        for(int i = nums.length - 1; i >= 0; i--){
-            for(int j = 0; j <= i - 1; j++){
-                if(nums[j] > nums[j + 1]){
-                    int temp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = temp;
-                }
-            }
-        }
+        //MERGE SORT
+        int n = nums.length;
+
+        mergeSortHelper(nums, 0, n - 1);
+
         return nums;
     }
-    private void swap(int left, int right, int[] nums){
-        int temp = nums[left];
-        nums[left] = nums[right];
-        nums[right] = temp;
+    public void mergeSortHelper(int [] arr, int low, int high){
+        if(low >= high){
+            return;
+        }
+
+        int mid = (low + high)/2;
+
+        mergeSortHelper(arr, low, mid);
+        mergeSortHelper(arr, mid + 1, high);
+        merge(arr, low, mid, high);
     }
+    public void merge(int [] arr, int low, int mid, int high){
+        List<Integer> temp = new ArrayList<>();
+        int left = low;
+        int right = mid + 1;
+
+        while(left <= mid && right <= high){
+            if(arr[left] <= arr[right]){
+                temp.add(arr[left]);
+                left++;
+            }
+            else{
+                temp.add(arr[right]);
+                right++;
+            }
+        }
+
+        while(left <= mid){
+            temp.add(arr[left]);
+            left++;
+        }
+
+        while(right <= high){
+            temp.add(arr[right]);
+            right++;
+        }
+
+        for(int i = low; i <= high; i++){
+            arr[i] = temp.get(i - low);
+        }
+
+    }
+
 }
